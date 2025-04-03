@@ -30,3 +30,21 @@ col3, col4, col5 = st.columns(3)  # Três colunas
 # Gráfico 1: Faturamento por dia (barra) com cores diferentes por cidade
 fig_data = px.bar(df_filtrado, x="Data", y="Total", color="Cidade", title="Faturamento por Dia")
 col1.plotly_chart(fig_data, use_container_width=True)  # Exibe o gráfico na primeira coluna
+
+# Gráfico 2: Faturamento por tipo de produto (horizontal)
+fig_prod = px.bar(df_filtrado, x="Data", y="Linha de Produtos", color="Cidade", title="Faturamento por Tipo de Produto", orientation="h")
+col2.plotly_chart(fig_prod, use_container_width=True)  # Exibe o gráfico na segunda coluna
+
+# Gráfico 3: Faturamento total por cidade (barra)
+total_cidade = df_filtrado.groupby("Cidade")[["Total"]].sum().reset_index()  # Agrupa por cidade e soma o faturamento
+fig_cidade = px.bar(total_cidade, x="Cidade", y="Total", title="Faturamento por Filial")
+col3.plotly_chart(fig_cidade, use_container_width=True)  # Exibe o gráfico na terceira coluna
+
+# Gráfico 4: Faturamento por tipo de pagamento (pizza)
+fig_tipo_pagamento = px.pie(df_filtrado, values="Total", names="Pagamento", title="Faturamento por Tipo de Pagamento")
+col4.plotly_chart(fig_tipo_pagamento, use_container_width=True)  # Exibe o gráfico na quarta coluna
+
+# Gráfico 5: Avaliação média das filiais (barra)
+total_cidade = df_filtrado.groupby("Cidade")[["Avaliacao"]].mean().reset_index()  # Agrupa por cidade e calcula a média da avaliação
+fig_avaliacao = px.bar(total_cidade, y="Avaliacao", x="Cidade", title="Avaliação das Filiais")
+col5.plotly_chart(fig_avaliacao, use_container_width=True)  # Exibe o gráfico na quinta coluna
